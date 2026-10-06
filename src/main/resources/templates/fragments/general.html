@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="menu" class="admin-menu">
+    <style>
+        .admin-menu {
+            --menu-ink: #f1f5f9;
+            --menu-muted: #94a3b8;
+            --menu-accent: #38bdf8;
+            --menu-accent-hover: #7dd3fc;
+            --menu-border: #1e295d;
+            margin: 18px auto 28px;
+            max-width: 1100px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #0a1128 0%, #101f42 100%);
+            border: 1px solid var(--menu-border);
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(5, 10, 25, 0.45);
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        }
+
+        .admin-menu__top,
+        .admin-menu__links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-menu__top {
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--menu-border);
+        }
+
+        .admin-menu__brand {
+            color: var(--menu-ink);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-menu__brand::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--menu-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--menu-accent);
+        }
+
+        .admin-menu__public {
+            color: var(--menu-accent);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 160ms ease;
+        }
+
+        .admin-menu__public::before {
+            content: "↗";
+            margin-right: 6px;
+        }
+
+        .admin-menu__links {
+            flex-wrap: wrap;
+            padding-top: 12px;
+        }
+
+        .admin-menu__links a {
+            padding: 9px 14px;
+            border: 1px solid var(--menu-border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--menu-muted);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 160ms ease;
+        }
+
+        .admin-menu__links a:hover,
+        .admin-menu__links a:focus-visible {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.15);
+            color: #ffffff;
+            outline: none;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.25);
+        }
+
+        .admin-menu__public:hover,
+        .admin-menu__public:focus-visible {
+            color: var(--menu-accent-hover);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        @media (max-width: 520px) {
+            .admin-menu {
+                margin: 12px 10px 22px;
+                padding: 14px;
+            }
+
+            .admin-menu__top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .admin-menu__links a {
+                flex: 1 1 140px;
+                text-align: center;
+            }
+        }
+    </style>
+    <div class="admin-menu__top">
+        <span class="admin-menu__brand">Panel de administración</span>
+        <a class="admin-menu__public" href="../">Volver a la tienda</a>
+    </div>
+    <nav class="admin-menu__links" aria-label="Gestión de la tienda">
+        <a href="gestionarZapatillas">Zapatillas</a>
+        <a href="">Usuarios</a>
+        <a href="">Categorías</a>
+        <a href="">Pedidos</a>
+    </nav>
+</div>
+
+</body>
+</html>

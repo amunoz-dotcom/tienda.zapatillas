@@ -1,0 +1,14 @@
+2026-10-02 15:47:29.984161+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "ZAPATILLAS" no encontrada
+Table "ZAPATILLAS" not found; SQL statement:
+INSERT INTO ZAPATILLAS (MODELO, MARCA, PRECIO, COLOR, TALLA, DESCRIPCION, IMAGEN) VALUES
+('Air Force 1 07', 'Nike', 119.99, 'Blanco', 42, 'El clásico estilo de baloncesto de los 80 adaptado al uso diario.', 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=600&q=80'),
+('Air Jordan 1 Retro', 'Nike', 179.99, 'Rojo y Negro', 43, 'Diseño legendario inspirado en los inicios de Michael Jordan.', 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=600&q=80'),
+('Ultraboost Light', 'Adidas', 180.00, 'Negro', 41, 'Amortiguación Boost ultraligera para máxima comodidad urbana.', 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=600&q=80'),
+('550 Retro Classic', 'New Balance', 120.50, 'Blanco y Verde', 40, 'Homenaje a los jugadores de baloncesto de los 80 con cuero premium.', 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=600&q=80'),
+('Suede Classic', 'Puma', 85.00, 'Azul Marino', 42, 'Un icono urbano desde 1968 con acabado suave en piel de ante.', 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=600&q=80'),
+('Old Skool Core', 'Vans', 75.00, 'Negro y Blanco', 41, 'Zapatilla de skate clásica con la distintiva banda lateral Sidestripe.', 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=600&q=80'),
+('Chuck 70 Vintage', 'Converse', 90.00, 'Negro', 43, 'Lona de alta calidad y costuras vintage para un estilo atemporal.', 'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?auto=format&fit=crop&w=600&q=80'),
+('Dunk Low Essential', 'Nike', 109.99, 'Rojo Cerdó', 42, 'Diseño de cancha retro con bloques de color llamativos y perfil bajo.', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80'),
+('GEL-Kayano 14', 'Asics', 160.00, 'Gris Metálico', 44, 'Estética runner de los 2000 con tecnología de gel para impacto.', 'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?auto=format&fit=crop&w=600&q=80'),
+('Forum Low Urban', 'Adidas', 110.00, 'Blanco y Azul', 41, 'Cierre de correa en el tobillo y silueta ochentera imprescindible.', 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=600&q=80') [42102-240]

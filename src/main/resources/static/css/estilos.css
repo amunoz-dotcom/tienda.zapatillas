@@ -1,0 +1,293 @@
+
+@import "tailwindcss";
+
+body{
+    background-color: #37adb8;
+}
+
+/* ==========================================================================
+   PANEL DE ADMINISTRACIÓN - AZUL OSCURO (ESTRUCTURA ORIGINAL CENTRADA)
+   Guardar en: src/main/resources/static/css/estilos.css
+   ========================================================================== */
+
+:root {
+    --bg-main: #0b132b;          /* Fondo noche oscura */
+    --bg-card: #141e38;          /* Fondo tarjetas */
+    --bg-input: #0b132b;         /* Fondo de los campos */
+    --border-color: #1e295d;     /* Bordes azulosos */
+    --text-main: #f1f5f9;        /* Texto blanco grisáceo */
+    --text-muted: #94a3b8;       /* Texto secundario */
+    --accent-cyan: #38bdf8;      /* Cían / Azul brillante */
+    --accent-blue: #2563eb;      /* Azul primario */
+    --danger-bg: rgba(239, 68, 68, 0.15);
+    --danger-text: #f87171;      /* Rojo borrar */
+    --danger-border: #ef4444;
+    --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Centrado general de la página */
+body {
+    background-color: var(--bg-main);
+    background-image: radial-gradient(circle at 50% 0%, #172554 0%, var(--bg-main) 80%);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    padding: 24px 16px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente todo el contenido */
+}
+
+/* --------------------------------------------------------------------------
+   MENÚ DEL PANEL
+   -------------------------------------------------------------------------- */
+.admin-menu {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #0a1128 0%, #101f42 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(5, 10, 25, 0.45);
+}
+
+.admin-menu__top,
+.admin-menu__links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-menu__top {
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.admin-menu__brand {
+    color: var(--text-main);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-menu__brand::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+.admin-menu__public {
+    color: var(--accent-cyan);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.admin-menu__public::before {
+    content: "↗";
+    margin-right: 6px;
+}
+
+.admin-menu__links {
+    flex-wrap: wrap;
+    padding-top: 12px;
+}
+
+.admin-menu__links a {
+    padding: 8px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 160ms ease;
+}
+
+.admin-menu__links a:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.15);
+    color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   CAJAS DE CONTENIDO Y TARJETAS (TODAS CENTRADAS)
+   -------------------------------------------------------------------------- */
+body > div:not(.admin-menu) {
+    width: 100%;
+    max-width: 800px; /* Ancho máximo centrado */
+    margin: 12px auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    text-align: center; /* Alineación centrada para textos e imágenes */
+}
+
+/* Imágenes dentro de los bloques */
+body > div img {
+    display: block;
+    margin: 12px auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    max-height: 140px;
+    object-fit: contain;
+    background-color: var(--bg-input);
+    padding: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   BOTONES Y ENLACES
+   -------------------------------------------------------------------------- */
+/* Botón 'Nuevo Producto' */
+a[href*="registrar"] {
+    display: inline-block;
+    background-color: rgba(56, 189, 248, 0.12);
+    color: var(--accent-cyan);
+    border: 1px solid var(--accent-cyan);
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+a[href*="registrar"]:hover {
+    background-color: var(--accent-cyan);
+    color: #0b132b;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+}
+
+/* Botón BORRAR */
+a[href*="borrar"] {
+    display: inline-block;
+    background-color: var(--danger-bg);
+    color: var(--danger-text);
+    border: 1px solid var(--danger-border);
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    margin: 8px 6px 4px 6px;
+    transition: all 0.2s ease;
+}
+
+a[href*="borrar"]:hover {
+    background-color: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Botón EDITAR */
+a[href*="editar"] {
+    display: inline-block;
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid #3b82f6;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    margin: 8px 6px 4px 6px;
+    transition: all 0.2s ease;
+}
+
+a[href*="editar"]:hover {
+    background-color: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   FORMULARIOS (REGISTRO Y EDICIÓN) CENTRADOS
+   -------------------------------------------------------------------------- */
+form {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 28px;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    text-align: left;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-size: 14px;
+    outline: none;
+}
+
+form input[type="text"]:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+form input[type="file"] {
+    margin: 8px 0 16px 0;
+    color: var(--text-muted);
+    width: 100%;
+}
+
+span[style*="color: red"], span[th\:errors] {
+    display: inline-block;
+    background-color: var(--danger-bg);
+    color: var(--danger-text) !important;
+    border: 1px solid var(--danger-border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+form input[type="submit"]:hover {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4);
+}

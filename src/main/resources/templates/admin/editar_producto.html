@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:insert="fragments/general.html :: menu"></div>
+
+<div>Modifica los datos del producto </div>
+
+<form action="#" th:action="guardarCambiosZapatilla" th:object="${zapatillaEditar}" method="post" enctype="multipart/form-data">
+    modelo: <input type="text" th:field="*{modelo}">
+    <span style="color: red" th:if="${#fields.hasErrors('modelo')}"  th:errors="*{modelo}"></span>
+    <br>
+    marca: <input type="text" th:field="*{marca}">
+    <br>
+    precio: <input type="text" th:field="*{precio}">
+    <span style="color: red" th:if="${#fields.hasErrors('precio')}"  th:errors="*{precio}"></span>
+    <br>
+    color: <input type="text" th:field="*{color}">
+    <br>
+    talla: <input type="text" th:field="*{talla}">
+    <br>
+    foto actual:
+    <br>
+    <img th:src="@{/mostrar_imagen(id=${zapatillaEditar.id})}" height="140px" />
+    <br>
+    portada: <input type="file" th:field="*{fotoSubida}">
+    <br>
+    <input type="hidden" th:field="*{id}">
+    <input type="submit" value="GUARDAR CAMBIOS">
+</form>
+
+</body>
+</html>

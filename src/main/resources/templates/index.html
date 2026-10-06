@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda Online</title>
+    <link rel="stylesheet" href="css/estilos2.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Librerías Three.js para la carga de modelos 3D (.FBX) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fflate@0.7.4/umd/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FBXLoader.js"></script>
+
+    <style>
+        .imagen-producto {
+            height: 140px;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        .imagen-producto:hover {
+            transform: scale(1.15);
+        }
+
+        /* Estilos del Banner Hero 3D */
+        .hero-3d-card {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 1000px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+        }
+
+        .hero-info {
+            flex: 1 1 320px;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            background-color: #2563eb;
+            color: #bfdbfe;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 15px 0 10px 0;
+            line-height: 1.2;
+        }
+
+        .hero-text {
+            color: #dbeafe;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: #fde047;
+            color: #1e3a8a;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .hero-btn:hover {
+            background-color: #facc15;
+            transform: translateY(-2px);
+        }
+
+        /* Contenedor del Visor 3D */
+        .viewer-container {
+            position: relative;
+            flex: 1 1 420px;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Texto "AF1" Tipográfico detrás del modelo 3D */
+        .af1-bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 13rem;
+            font-weight: 900;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            color: rgba(255, 255, 255, 0.08);
+            letter-spacing: -4px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            text-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
+            line-height: 1;
+        }
+
+        #canvas-3d {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            cursor: grab;
+        }
+
+        #canvas-3d:active {
+            cursor: grabbing;
+        }
+
+        @media (max-width: 768px) {
+            .hero-3d-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .viewer-container {
+                width: 100%;
+                height: 280px;
+            }
+            .af1-bg-text {
+                font-size: 9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a class="underline p-2 block" href="admin/inicioAdmin">acceso a administracion</a>
+
+<div class="m-3">Bienvenido a la parte publica de la tienda</div>
+
+<div class="[&_a]:underline" style="text-align: center;">
+    <a href="#" style="margin: 10px;" id="inicio">INICIO</a>
+    <a href="#" style="margin: 10px;" id="zapatillas">Zapatillas</a>
+    <a href="#" style="margin: 10px;" id="registrarme">REGISTRARME</a>
+    <a href="#" style="margin: 10px;" id="identificarme">IDENTIFICARME</a>
+    <a href="#" style="margin: 10px;" id="carrito">CARRITO</a>
+    <a href="#" style="margin: 10px;" id="pedidos">VER MIS PEDIDOS</a>
+    <a href="#" style="margin: 10px;" id="mis_datos">MIS DATOS</a>
+    <a href="#" style="margin: 10px;" id="cerrar_sesion">CERRAR SESION</a>
+</div>
+
+<div id="contenedor"></div>
+
+<script src="librerias_js/jquery.js"></script>
+<script src="librerias_js/mustache.js"></script>
+
+<script>
+
+    let plantilla_inicio = "";
+    let plantilla_productos = "";
+    let plantilla_detalles_producto = "";
+
+    // Carga de plantillas HTML
+    $.get("plantillas_html/inicio.html").done(function(res){
+        plantilla_inicio = res;
+    });
+    $.get("plantillas_html/listado_productos.html").done(function(res){
+        plantilla_productos = res;
+    });
+    $.get("plantillas_html/detalles_producto.html").done(function(res){
+        plantilla_detalles_producto = res;
+    });
+
+    // Función para renderizar el Banner 3D Hero en la sección de Inicio
+    function cargarVistaInicio() {
+        const heroHTML = `
+            <div class="hero-3d-card">
+                <div class="hero-info">
+                    <span class="hero-badge">Colección Exclusiva</span>
+                    <h1 class="hero-title">Air Force 1 en 3D</h1>
+                    <p class="hero-text">Explora cada ángulo de tu zapatilla favorita en tiempo real antes de realizar tu pedido.</p>
+                    <a href="#" onclick="mostrar_zapatillas(); return false;" class="hero-btn">Ver Catálogo</a>
+                </div>
+                <div class="viewer-container">
+                    <!-- Texto AF1 estilizado ubicado al fondo del canvas 3D -->
+                    <div class="af1-bg-text">AF1</div>
+                    <div id="canvas-3d"></div>
+                </div>
+            </div>
+        `;
+
+        // Coloca la plantilla de inicio y el banner 3D en el contenedor
+        $("#contenedor").html(heroHTML + (plantilla_inicio || ""));
+
+        // Inicializar la escena 3D con Three.js
+        initThreeJS();
+    }
+
+    // Inicializador del Visor Three.js para FBX
+    function initThreeJS() {
+        const container = document.getElementById('canvas-3d');
+        if (!container) return;
+
+        // 1. Escena, Cámara y Renderizador
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 1.2, 3.5);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // 2. Controles de Órbita
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enableZoom = false;
+
+        // 3. Luces
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        dirLight.position.set(5, 10, 7);
+        scene.add(dirLight);
+
+        const blueLight = new THREE.PointLight(0x3b82f6, 2, 10);
+        blueLight.position.set(-5, -2, -2);
+        scene.add(blueLight);
+
+        // 4. Carga del Modelo .FBX
+        const fbxLoader = new THREE.FBXLoader();
+        let sneakerModel = null;
+
+        // Cambia 'modelos/zapatilla.fbx' por la ruta exacta de tu archivo .fbx
+        fbxLoader.load('modelos/zapatilla.fbx', function (fbx) {
+            sneakerModel = fbx;
+
+            // Ajuste de escala: Los FBX suelen ser muy grandes por venir en centímetros.
+            // Si no ves la zapatilla, prueba ajustando a (0.01, 0.01, 0.01) o (0.1, 0.1, 0.1)
+            sneakerModel.scale.set(0.01, 0.01, 0.01);
+            sneakerModel.position.set(0, -0.3, 0);
+
+            scene.add(sneakerModel);
+        }, undefined, function (error) {
+            console.warn('Cargando geometría interactiva mientras se ubica el archivo .fbx:', error);
+
+            // Geometría de respaldo si la ruta del FBX aún no está lista
+            const demoGroup = new THREE.Group();
+            const bodyGeom = new THREE.BoxGeometry(1.8, 0.5, 0.8);
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x2563eb });
+            const body = new THREE.Mesh(bodyGeom, bodyMat);
+
+            const soleGeom = new THREE.BoxGeometry(2.0, 0.2, 0.85);
+            const soleMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            const sole = new THREE.Mesh(soleGeom, soleMat);
+            sole.position.y = -0.35;
+
+            demoGroup.add(body);
+            demoGroup.add(sole);
+            sneakerModel = demoGroup;
+            scene.add(sneakerModel);
+        });
+
+        // 5. Animación de Rotación
+        function animate() {
+            requestAnimationFrame(animate);
+            if (sneakerModel) {
+                sneakerModel.rotation.y += 0.006;
+            }
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Adjust al cambiar el tamaño de ventana
+        window.addEventListener('resize', () => {
+            if (!container) return;
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    }
+
+    // Atención a los enlaces
+    $("#inicio").click(function(e) {
+        e.preventDefault();
+        cargarVistaInicio();
+    });
+
+    function mostrar_zapatillas() {
+        $.getJSON("restZapatillas/listar").done(function(json){
+            console.log(json);
+            const resultadoMustache = Mustache.render(plantilla_productos, json);
+            $("#contenedor").html(resultadoMustache);
+        });
+    }
+
+    function mostrar_detalles(id) {
+        $.getJSON("restZapatillas/obtener-zapatillas", { id: id }).done(function(json){
+            console.log(json);
+            const resultadoHtml = Mustache.render(plantilla_detalles_producto, json);
+            $("#contenedor").html(resultadoHtml);
+        });
+    }
+
+    $("#zapatillas").click(function(e) {
+        e.preventDefault();
+        mostrar_zapatillas();
+    });
+
+    // Vista por defecto al cargar la página
+    cargarVistaInicio();
+
+</script>
+
+</body>
+</html> 

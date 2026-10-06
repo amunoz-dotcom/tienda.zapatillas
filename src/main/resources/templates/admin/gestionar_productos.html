@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:insert="fragments/general.html :: menu"></div>
+
+
+
+<div>listar productos, permitiendo borrar y editar</div>
+<div>
+    <a href="registrarZapatilla">nuevo producto</a>
+</div>
+
+
+<div th:each="v : ${zapatillas}" style="margin: 15px">
+    modelo: <span th:text="${v.modelo}"></span>
+    <br>
+    <img th:src="@{${ '../mostrar_imagen?id=' + v.id }}" height="80px"/>
+    <br>
+    Marca: <span th:text="${v.Marca}  "></span>
+    <br>
+    Precio: <span th:text="${v.Precio}"></span>
+    <br>
+    descripcion: <span th:text="${v.descripcion}"></span>
+    <br>
+    Talla: <span th:text="${v.Talla}"></span>
+    <br>
+    Color: <span th:text="${v.Color}"></span>
+    <br>
+    <a th:href="@{${ 'borrarZapatilla?id=' + v.id }}"
+       onclick="return confirm('¿estas seguro?')" >BORRAR</a>
+    <br>
+    <a th:href="@{${ 'editarZapatilla?id=' + v.id }}">EDITAR</a>
+</div>
+
+
+</body>
+</html>

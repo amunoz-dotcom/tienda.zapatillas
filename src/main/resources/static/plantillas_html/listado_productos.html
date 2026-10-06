@@ -1,0 +1,30 @@
+<!-- Envoltorio de la rejilla (Grid) -->
+<div class="product-grid">
+
+    {{#.}}
+    <!-- Tarjeta cuadrada individual por cada producto -->
+    <div class="product-card">
+        <strong>modelo: {{modelo}}</strong>
+
+        <img class="imagen-producto" src="mostrar_imagen?id={{id}}" alt="Imagen del producto" />
+
+        <div>marca: {{marca}}</div>
+        <div>precio: {{precio}} €</div>
+        <div>color: {{color}}</div>
+        <div>talla: {{talla}}</div>
+        <div>descripcion: {{descripcion}}</div>
+
+        <!-- Botón Ver Detalles (con la función JavaScript) -->
+        <a href="#" class="btn-details" onclick="mostrar_detalles({{id}}); return false;">ver detalles</a>
+
+        <div style="margin-top: 6px;">
+            <label>cantidad:</label>
+            <input type="number" value="1" min="1">
+        </div>
+
+        <!-- Botón Agregar al Carrito (con el evento onclick) -->
+        <a href="#" class="btn-cart" onclick="alert('agregar cantidad a carrito'); return false;">agregar al carrito</a>
+    </div>
+    {{/.}}
+
+</div>

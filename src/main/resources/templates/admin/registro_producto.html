@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<div th:insert="fragments/general.html :: menu"></div>
+
+<div>Introduce los datos del nuevo producto</div>
+
+<form action="#" th:action="guardarZapatilla" th:object="${nuevo}" method="post" enctype="multipart/form-data">
+    Modelo: <input type="text" th:field="*{modelo}">
+    <br>
+    <span style="color: red" th:if="${#fields.hasErrors('modelo')}"  th:errors="*{modelo}"></span>
+    <br>
+    Marca: <input type="text" th:field="*{marca}">
+    <br>
+    <br>
+    Precio: <input type="text" th:field="*{precio}">
+    <br>
+    <span style="color: red" th:if="${#fields.hasErrors('precio')}"  th:errors="*{precio}"></span>
+
+    <br>
+    Color: <input type="text" th:field="*{color}">
+    <br>
+    <br>
+    Talla: <input type="text" th:field="*{talla}">
+    <br>
+    <br>
+    Descripcion: <input type="text" th:field="*{descripcion}">
+    <br>
+    <br>
+    portada: <input type="file" th:field="*{fotoSubida}">
+    <br>
+    <input type="submit" value="REGISTRAR">
+</form>
+
+</body>
+</html>
